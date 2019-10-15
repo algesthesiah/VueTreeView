@@ -1,0 +1,55 @@
+.tree-container {
+  padding-top: 7px;
+  .item {
+    list-style: none;
+    padding-left: 13px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    position: relative;
+    border-left: 1px solid #444b5d;
+    transition: all 0.2s linear 0s;
+    max-height:0px;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 13px;
+      height: 1px;
+      background-color: #444b5d;
+    }
+  }
+  .item.change{
+    max-height:300px;
+  }
+  .item.end {
+    border-left: 1px solid transparent;
+    &:before {
+      left: -1px;
+      width: 14px;
+    }
+  }
+  .item.first {
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1px;
+      height: 29px;
+      background-color: #444b5d;
+      transform: rotate(180deg);
+      transform-origin: 0% 0%;
+    }
+  }
+  .slot-icon {
+    position: absolute;
+    left: 19px;
+    top: 0;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+    transition: all 0.35s ease;
+  }
+}
