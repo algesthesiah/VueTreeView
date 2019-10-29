@@ -7,8 +7,6 @@
     padding-bottom: 18px;
     position: relative;
     border-left: 1px solid #444b5d;
-    transition: all 0.2s linear 0s;
-    max-height:0px;
     &:before {
       content: '';
       position: absolute;
@@ -18,9 +16,6 @@
       height: 1px;
       background-color: #444b5d;
     }
-  }
-  .item.change{
-    max-height:300px;
   }
   .item.end {
     border-left: 1px solid transparent;
@@ -50,6 +45,5 @@
     cursor: pointer;
     width: 14px;
     height: 14px;
-    transition: all 0.35s ease;
   }
 }
