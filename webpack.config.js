@@ -1,139 +1,67 @@
 const path = require('path')
-const webpack = require('webpack')
-const pkg = require('./package.json')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-
-const styleLoader = function(options) {
-  var options = options || {}
-  var cssLoader = {
-    loader: 'css-loader',
-    sourceMap: options.sourceMap
-  }
-  var postcssLoader = {
-    loader: 'postcss-loader',
-    sourceMap: options.sourceMap
-  }
-
-  function generateLoaders (loader, loaderOptions) {
-    const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
-
-    if (loader) {
-      loaders.push({
-        loader: loader + '-loader',
-        options: Object.assign({}, loaderOptions, {
-          sourceMap: options.sourceMap
-        })
-      })
-    }
-
-    // Extract CSS when that option is specified
-    // (which is the case during production build)
-    if (options.extract) {
-      return ExtractTextPlugin.extract({
-        use: loaders,
-        fallback: 'vue-style-loader'
-      })
-    } else {
-      return ['vue-style-loader'].concat(loaders)
-    }
-  }
-
-  return {
-    css: generateLoaders(),
-    less: generateLoaders('less')
-  }
-}
-
-const isProduction = process.env.NODE_ENV === 'production'
-
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 module.exports = {
   entry: './src/main.js',
+  mode: process.env.NODE_ENV,
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: 'dist',
     filename: 'index.js',
-    library: pkg.name,
-    libraryTarget: 'umd',
-    umdNamedDefine: true
   },
   module: {
     rules: [
       {
         test: /\.css$/,
         use: [
+          MiniCssExtractPlugin.loader,
           'vue-style-loader',
-          'css-loader'
+          {
+            loader: 'css-loader',
+            options: { importLoaders: 1 },
+          },
+          'postcss-loader',
         ],
-      },      {
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+          },
+        ],
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: {
-          loaders: styleLoader({
-            extract: isProduction,
-            usePostCSS: isProduction
-          })
-          // other vue-loader options go here
-        }
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: file => /node_modules/.test(file) && !/\.vue\.js/.test(file),
       },
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        }
-      }
-    ]
+    ],
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      vue$: 'vue/dist/vue.esm.js',
     },
-    extensions: ['*', '.js', '.vue', '.json']
-  },
-  devServer: {
-    port: 9000,
-    historyApiFallback: true,
-    noInfo: true,
-    overlay: true
+    extensions: ['*', '.js', '.vue', '.json'],
   },
   performance: {
-    hints: false
+    hints: false,
   },
-  devtool: '#eval-source-map'
-}
-
-if (isProduction) {
-  module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
+  plugins: [
+    // 请确保引入这个插件！
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // all options are optional
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+      ignoreOrder: false, // Enable to remove warnings about conflicting order
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    }),
-    new ExtractTextPlugin({
-      publicPath: 'dist',
-      filename: 'style.css'
-    }),
-    new OptimizeCSSPlugin({
-      cssProcessorOptions: isProduction
-        ? { safe: true, map: { inline: false } }
-        : { safe: true }
-    })
-  ])
+  ],
 }
