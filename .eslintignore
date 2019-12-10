@@ -1,0 +1,11 @@
+build/*.js
+config/*.js
+src/assets/plugin/
+src/utils/tosca.js
+src/utils/validator.js
+src/utils/myinput.js
+/src/components/product/serviceDetail/scrollspy.js
+/dist/
+/*.js
+public
+dist/*.js
