@@ -1,7 +1,7 @@
 {
   "name": "vue2-tree-view",
   "description": "A simple organization tree chart based on Vue2.x",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "main": "dist/index.js",
   "module": "src/index.js",
   "author": "liulu <541877028@qq.com>",
