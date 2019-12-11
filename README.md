@@ -3,6 +3,7 @@
 > A simple organization tree chart based on Vue2.x
 
 ## Usage
+
 ``` html
 
 <template>
@@ -21,6 +22,7 @@
 </template>
 
 ```
+
 ``` js
 export default {
   data() {
@@ -53,16 +55,19 @@ export default {
 
 
 ```
-### DEMO https://algesthesiahunter.github.io/#/VueTreeView
+
+### DEMO <https://algesthesiahunter.github.io/VueTreeView>
+
 ### NPM
 
-```
+``` bash
 # use npm
-npm i vue2-tree-view
+npm i vue2-tree-view -S
 
 # use yarn
 yarn add vue2-tree-view
 ```
+
 ### Import Plugins
 
 ``` js
