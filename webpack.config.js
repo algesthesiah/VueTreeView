@@ -1,4 +1,5 @@
 const path = require('path')
+const pkg = require('./package.json')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 module.exports = {
@@ -8,6 +9,9 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     publicPath: 'dist',
     filename: 'index.js',
+    library: pkg.name,
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
   },
   module: {
     rules: [
