@@ -1,6 +1,6 @@
 import VueTreeView from './VueTreeView'
 
-const install = Vue => {
+const install = (Vue) => {
   if (install.installed) {
     return
   }

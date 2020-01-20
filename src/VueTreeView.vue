@@ -12,7 +12,7 @@ export default {
     },
   },
   render(h, c) {
-    const iconClick = v => {
+    const iconClick = (v) => {
       v.expanded = !v.expanded
       const ob = v.__ob__
       ob.dep.notify()
