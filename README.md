@@ -56,8 +56,9 @@ export default {
 
 ```
 
-### DEMO <https://algesthesiahunter.github.io/VueTreeView>
-
+### DEMO
+- [在线网址](https://coding.algesthesiahunter.top/VueTreeView)
+- [Online site](<https://algesthesiahunter.github.io/VueTreeView>)
 ### NPM
 
 ``` bash
