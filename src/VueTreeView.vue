@@ -19,6 +19,7 @@ export default {
     }
     const data = c.props.data
     const mySlot = c.scopedSlots && c.scopedSlots.treeView
+
     return (
       <div class="tree-container">
         {data.map((v, i) => (
